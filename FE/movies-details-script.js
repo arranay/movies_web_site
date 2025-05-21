@@ -1,6 +1,5 @@
 window.addEventListener('DOMContentLoaded', () => {
   const movie = JSON.parse(sessionStorage.getItem('selectedMovie'));
-  console.log(movie);
   if (!movie) {
     window.location.href = 'index.html';
     return;

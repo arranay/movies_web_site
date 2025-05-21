@@ -36,6 +36,7 @@ const movies = [
   },
 ];
 
+const searchInput = document.getElementById("searchInput");
 const container = document.getElementById('movies-container');
 
 function showDetails(index) {
@@ -44,13 +45,13 @@ function showDetails(index) {
   window.location.href = 'movie.html';
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  movies.forEach((movie, index) => {
-    const col = document.createElement('div');
-    col.className = 'col-md-4 mb-4';
-
+function renderMovies(list) {
+  container.innerHTML = "";
+  list.forEach((movie, index) => {
+    const col = document.createElement("div");
+    col.className = "col-md-4 mb-4";
     col.innerHTML = `
-        <div class="card shadow-sm" onclick="showDetails(${index})">
+        <div class="card shadow-sm" style="cursor: pointer;" onclick="showDetails(${index})">
           <img src="${movie.image}" class="card-img-top" style="width: 100%; height: 300px; object-fit: cover;" alt="${movie.title}">
           <div class="card-body">
             <h5 class="card-title">${movie.title}</h5>
@@ -59,7 +60,18 @@ window.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       `;
-
     container.appendChild(col);
   });
+}
+
+
+function updateList() {
+  const query = searchInput.value.toLowerCase();
+  filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query));
+  renderMovies(filteredMovies);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  searchInput.addEventListener('input', updateList);
+  updateList();
 });
